@@ -5,7 +5,6 @@ const router = express.Router();
 
 
 
-
 // Get all users
 router.get('/', async (req, res) => {
     try {

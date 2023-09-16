@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 
+
 //Creates a new order instance from the user cart data. 
 router.post('/:userId/placeOrder', async (req, res) => {
     try {
