@@ -1,19 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ProductCard from "./ProductCard";
 
 
 
-export default function ShoppingCart({ cartItems }) {
+const ShoppingCart = () => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        // Fetch the product data from your API
+        axios.get("http://localhost:3000/user/:userId/cart")
+
+            .then((response) => {
+                setProducts(response.data);  // Update the products state
+                console.log("Fetched products:", response.data + "worked!");
+            })
+            .catch((error) => {
+                console.error("Error fetching products:", error);
+            });
+    }, []); // Empty dependency array means this useEffect runs once when component mounts
 
     return (
-        <div>
-            <h1>Cart</h1>
-            <Link to="/wishlist">Wishlist</Link>
-            <div>
-                {cartItems.map(item => (
-                    <div key={item.id}>{item.name}</div>
-                ))}
-            </div>
+        <div className="product-list">
+            {products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+            ))}
         </div>
-    )
+    );
 }
+
+
+export default ShoppingCart;

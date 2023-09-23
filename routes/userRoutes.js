@@ -1,68 +1,32 @@
 const express = require('express');
-const { authenticateToken } = require('../middleware.js');
 const { User, Product } = require('../mongoDB/models.js');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const passport = require ('passport');
 
 
-
-// Get all users
-router.get('/', async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(200).send(users);
-    } catch (error) {
-        res.status(500).send(error);
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
     }
-});
+    res.status(401).send('Unauthorized');
+  }
+
+// // Get all users 
+// router.get('/',  async (req, res) => {
+//     try {
+//         const users = await User.find();
+//         res.status(200).send(users);
+//     } catch (error) {
+//         res.status(500).send(error);
+//     }
+// });
 
 //Get one User by ID 
 router.get('/:userId', async (req, res) => {
     try {
         const user = await User.findById(req.params.userId);
         res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-});
-
-// Register a new user
-router.post('/register', async (req, res) => {
-    try {
-        const newUser = new User(req.body);
-        await newUser.save();
-        res.status(201).send(newUser);
-    } catch (error) {
-        res.status(400).send(error);
-        console.log
-    }
-});
-
-// Authenticate a user (Login)
-router.post('/login', async (req, res) => {
-    try {
-        const user = await User.findOne({ username: req.body.username, password: req.body.password });
-        if (user) {
-            res.status(200).send(user);
-            console.log("user login")
-        } else {
-            res.status(400).send('Invalid credentials');
-        }
-    } catch (error) {
-        res.status(500).send(error);
-    }
-});
-
-// Unauthenticate a user (Logout)
-router.post('/logout', async (req, res) => {
-    try {
-        const user = await User.findOne({ username: req.body.username, password: req.body.password });
-        if (user) {
-            res.status(200).send(user);
-            console.log("user logout")
-            // res.redirect("")
-        } else {
-            res.status(400).send('Invalid credentials');
-        }
     } catch (error) {
         res.status(500).send(error);
     }

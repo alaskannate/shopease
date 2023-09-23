@@ -1,10 +1,10 @@
 const express = require('express');
-const { authenticateToken } = require('../middleware.js');
+const { isAuthenticated } = require('../middleware.js');
 const { Product } = require('../mongoDB/models.js');
 const router = express.Router();
 
 // Get all products
-router.get('/', async (req, res) => {
+router.get('/', isAuthenticated, async (req, res) => {
     try {
         const products = await Product.find();
         res.status(200).send(products);

@@ -7,17 +7,21 @@ import Home from "./components/Home";
 import ProductList from "./components/ProductList";
 import User from "./components/User";
 import Wishlist from "./components/Wishlist"
+import Register from "./components/auth/Register"
+import LoginPage from "./components/auth/Login"
+import axios from 'axios';
 
-
-
-
+axios.defaults.withCredentials = true;
 
 function App() {
+
   return (
     <UserProvider>
       <Router>
         <Navbar />
         <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<ProductList />} />

@@ -1,10 +1,14 @@
 const express = require('express');
-const { authenticateToken } = require('../middleware.js');
 const { Order, Product, User } = require('../mongoDB/models.js');
 const router = express.Router();
 
 
-
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.status(401).send('Unauthorized');
+  }
 
 //Creates a new order instance from the user cart data. 
 router.post('/:userId/placeOrder', async (req, res) => {

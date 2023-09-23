@@ -1,5 +1,5 @@
 import React from 'react';
-import AddToCartBtn from './buttons/AddToCartBtn';
+// import AddToCartBtn from './buttons/AddToCartBtn';
 
 const ProductCard = ({ product }) => {
   return (
@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
       <h2>{product.name}</h2>
       <p>{product.description}</p>
       <p>{product.price}</p>
-      <AddToCartBtn productId={product._id} userId={user._id}/>
+      {/* <AddToCartBtn productId={product._id} userId={user._id}/> */}
     </div>
   );
 };

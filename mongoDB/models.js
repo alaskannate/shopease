@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 
 const cartItemSchema = new mongoose.Schema({
@@ -9,8 +10,8 @@ const cartItemSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    firstName: { type: String, required: false },
+    lastName: { type: String, required: false },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     address: {
@@ -29,6 +30,13 @@ const userSchema = new mongoose.Schema({
     ],
     cart: [cartItemSchema]
 });
+
+userSchema.pre('save', async function(next) {
+    if (this.isModified('password')) {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
+    next();
+  });
 
 
 
