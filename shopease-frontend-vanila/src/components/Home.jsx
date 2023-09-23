@@ -1,6 +1,6 @@
 import React from "react";
 // import { useSelector, useDispatch } from 'react-redux';
-import LogoutBtn from "./buttons/LogoutBtn";
+import LogoutBtn from "./buttons/LogOutBtn";
 
 
 
